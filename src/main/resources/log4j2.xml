@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+
+    <Appenders>
+        <Console name="console" target="SYSTEM_OUT">
+            <PatternLayout>
+                <pattern>
+                    %highlight{%d{yyyy-MM-dd HH:mm:ss.SSS} [%-5level] [%t] %X{RID} %X{UID} %c{10} - %msg%n}{FATAL=red,
+                    ERROR=red, WARN=yellow, INFO=black, DEBUG=white, TRACE=white}
+                </pattern>>
+            </PatternLayout>
+        </Console>
+    </Appenders>
+
+    <Loggers>
+
+        <Logger name="org.apache.tomcat.util.scan.StandardJarScanner" level="error"/>
+        <Logger name="com.robert.szebenyi" level="debug"/>
+        <Logger name="org.glassfish.jersey.internal.inject.Providers" level="severe"/>
+
+        <Root level="info">
+            <AppenderRef ref="console"/>
+        </Root>
+
+    </Loggers>
+
+</Configuration>
