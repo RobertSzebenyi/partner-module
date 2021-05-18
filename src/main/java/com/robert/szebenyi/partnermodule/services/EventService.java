@@ -28,6 +28,7 @@ public class EventService {
     }
 
     public EventSeatsRestDto getEventSeats(int eventId) {
+        
         return EventSeatsRestDto.builder()
                 .eventId(eventId)
                 .seats(seatToSeatRestDtoTransformer.transformList(seatRepository.findAllByEvent_EventId(eventId)))

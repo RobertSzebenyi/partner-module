@@ -38,24 +38,19 @@ public class BasicDataConfiguration {
     public void setupDatabase() {
 
         try {
-            ObjectMapper mapper = new ObjectMapper();
-            mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-            mapper.configure(DeserializationFeature.READ_DATE_TIMESTAMPS_AS_NANOSECONDS, false);
-            mapper.registerModule(new JavaTimeModule());
+            ObjectMapper mapper = getConfiguredMapper();
 
-            JSONObject jsonObject = new JSONObject(new JSONTokener(resourceLoader.getResource("classpath:getEvents.json").getInputStream()));
+            JSONObject jsonObject = getJsonObjectFromFile("getEvents.json");
             JSONArray jsonArray = jsonObject.getJSONArray("data");
 
             for (Object eventObject : jsonArray) {
                 Event event = mapper.readValue(eventObject.toString(), Event.class);
-                JSONObject seatJsonObject = new JSONObject(new JSONTokener(resourceLoader
-                        .getResource("classpath:getEvent" + event.getEventId() + ".json").getInputStream()));
+                JSONObject seatJsonObject = getJsonObjectFromFile("getEvent" + event.getEventId() + ".json");
                 JSONArray seatsJsonArray = ((JSONObject) seatJsonObject.get("data")).getJSONArray("seats");
                 Set<Seat> seats = mapper.readValue(seatsJsonArray.toString(), new TypeReference<Set<Seat>>() {
                 });
                 eventRepository.save(event);
                 seats.forEach(seat -> seat.setEvent(event));
-
                 seatRepository.saveAll(seats);
             }
 
@@ -63,5 +58,18 @@ public class BasicDataConfiguration {
             e.printStackTrace();
         }
 
+    }
+
+    private JSONObject getJsonObjectFromFile(String fileName) throws IOException {
+        return new JSONObject(new JSONTokener(resourceLoader
+                .getResource("classpath:" + fileName).getInputStream()));
+    }
+
+    private ObjectMapper getConfiguredMapper() {
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        mapper.configure(DeserializationFeature.READ_DATE_TIMESTAMPS_AS_NANOSECONDS, false);
+        mapper.registerModule(new JavaTimeModule());
+        return mapper;
     }
 }

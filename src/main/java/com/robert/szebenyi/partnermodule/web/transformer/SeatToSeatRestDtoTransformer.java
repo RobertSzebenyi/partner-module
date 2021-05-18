@@ -14,7 +14,7 @@ public class SeatToSeatRestDtoTransformer extends BaseRestTransformer<Seat, Seat
         }
 
         return SeatRestDto.builder()
-                .id(from.getId())
+                .id(from.getSeatId())
                 .price(from.getPrice())
                 .currency(from.getCurrency())
                 .reserved(from.isReserved())
