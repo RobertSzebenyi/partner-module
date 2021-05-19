@@ -5,16 +5,20 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class EventSeatsRestDto {
+public class EventRestResponseDto {
 
     private int eventId;
 
-    private List<SeatRestDto> seats;
+    private String title;
+
+    private String location;
+
+    private long startTimeStamp;
+
+    private long endTimeStamp;
 
 }

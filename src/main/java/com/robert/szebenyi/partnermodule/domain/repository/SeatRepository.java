@@ -10,4 +10,6 @@ import java.util.List;
 public interface SeatRepository extends JpaRepository<Seat, Long> {
 
     List<Seat> findAllByEvent_EventId(int eventId);
+
+    Seat findByEvent_EventIdAndAndSeatId(int eventId, String seatId);
 }

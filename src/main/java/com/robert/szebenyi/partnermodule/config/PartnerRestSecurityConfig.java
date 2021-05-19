@@ -16,7 +16,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @RequiredArgsConstructor
 public class PartnerRestSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    //private final SecurityExceptionHandler securityExceptionHandler;
+    @Autowired
+    private MyBasicAuthenticationEntryPoint authenticationEntryPoint;
 
     @Value("${partner-api.username}")
     private String username;
@@ -37,25 +38,12 @@ public class PartnerRestSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatcher("/partner/**")
                 .authorizeRequests()
                 .anyRequest()
-                .permitAll()  // TODO
-//                .authenticated()
-//                .and()
-//                .httpBasic()
-//                // .authenticationEntryPoint(authenticationEntryPoint())
-//                .and()
-//                .exceptionHandling()
-        // .accessDeniedHandler(accessDeniedHandler())
+                .authenticated()
+                .and()
+                .httpBasic()
+                .authenticationEntryPoint(authenticationEntryPoint)
         ;
     }
-
-
-//    private AuthenticationEntryPoint authenticationEntryPoint() throws Exception {
-//        return new InternalRestAuthenticationEntryPoint(securityExceptionHandler);
-//    }
-//
-//    private AccessDeniedHandler accessDeniedHandler() {
-//        return (request, response, exception) -> securityExceptionHandler.handle(response, exception);
-//    }
 
     @Bean
     public PasswordEncoder passwordEncoder() {

@@ -1,19 +1,19 @@
 package com.robert.szebenyi.partnermodule.web.transformer;
 
 import com.robert.szebenyi.partnermodule.domain.Event;
-import com.robert.szebenyi.partnermodule.web.dto.EventRestDto;
+import com.robert.szebenyi.partnermodule.web.dto.EventRestResponseDto;
 import org.springframework.stereotype.Component;
 
 @Component
-public class EventToEventRestDtoTransformer extends BaseRestTransformer<Event, EventRestDto> {
+public class EventToEventRestDtoTransformer extends BaseRestTransformer<Event, EventRestResponseDto> {
 
     @Override
-    public EventRestDto transform(Event from) {
+    public EventRestResponseDto transform(Event from) {
         if (from == null) {
             return null;
         }
 
-        return EventRestDto.builder()
+        return EventRestResponseDto.builder()
                 .eventId(from.getEventId())
                 .title(from.getTitle())
                 .location(from.getLocation())

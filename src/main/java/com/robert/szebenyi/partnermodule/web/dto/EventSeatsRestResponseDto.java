@@ -5,14 +5,16 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class TechnicalMessage {
+public class EventSeatsRestResponseDto {
 
-    private String text;
+    private int eventId;
 
-    private String details;
+    private List<SeatRestDto> seats;
 
 }

@@ -5,20 +5,18 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotNull;
+
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class EventRestDto {
+public class ReserveRestRequestDto {
 
-    private int eventId;
+    @NotNull
+    private long eventId;
 
-    private String title;
-
-    private String location;
-
-    private long startTimeStamp;
-
-    private long endTimeStamp;
+    @NotNull
+    private long seatId;
 
 }
